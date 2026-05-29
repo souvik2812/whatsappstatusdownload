@@ -1,97 +1,78 @@
-<!--
+# StatusSaverWhatsapp 📱✨
 
-Viewed transcript.jsonl:1-144
-Listed directory whatsappstatusdownload
+A modern, native Android application built with **Jetpack Compose** and **Material 3** to seamlessly view, play, and save WhatsApp statuses (images and videos) directly to your device's gallery.
 
-The project scaffold is already there. Let me check the current state of the app files to see what was completed in the previous session.
+---
 
-Listed directory app
-Listed directory src
-Viewed build.gradle.kts:1-94
-Listed directory main
-Listed directory java
-Listed directory com
-Listed directory example
-Listed directory statussaver
-Listed directory data
-Listed directory ui
-Listed directory theme
-Listed directory components
-Listed directory main
+## 🌟 Key Features
 
-Good — the project has most of the files written. Let me read all the key source files to understand the current state and what's missing or needs fixing before building.
+- **🎨 Multi-Color Theme System**: Customize the app with 8 distinct color palettes (Violet, Red, Orange, Blue, Yellow, Green, Pink, and Dark Green) accessible directly from the top bar.
+- **🌗 Dynamic Dark & Light Modes**: Toggle between light and dark modes instantly, with configurations persisting across app restarts (powered by `DataStore`).
+- **🖼 Gallery-Style Media Viewer**: Open any media to enter a full-screen gallery view. Swipe left and right smoothly through statuses just like in a native photo gallery.
+- **🎬 Native Video Playback**: Integrated `ExoPlayer` for lag-free, high-performance video playing within the app.
+- **📥 One-Click Saves**: Save status files to your public storage. Images are stored in `Pictures/StatusSaver/` and videos in `Downloads/StatusSaver/`.
+- **🔒 Secure Storage Access**: Utilizes the modern Android **Storage Access Framework (SAF)**, avoiding legacy storage permissions and ensuring strict privacy compliance.
 
-Viewed MainActivity.kt:1-148
-Viewed GalleryScreen.kt:1-481
-Viewed StorageRepository.kt:1-185
-Viewed StatusViewModel.kt:1-164
-Viewed AndroidManifest.xml:1-39
-Viewed StatusItem.kt:1-30
-Viewed libs.versions.toml:1-50
+---
 
-Good, the project has all the source files. Now let me try to build it and see if there are compilation errors:
+## 🛠 Tech Stack & Architecture
 
-Viewed Theme.kt:1-46
-Viewed Color.kt:1-28
+The project is structured following clean architecture principles and Android development best practices:
 
-The project looks complete! Let me now check what navigation files exist and see if the build compiles:
+- **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose) for a fully declarative and modern UI.
+- **Design System**: [Material 3](https://developer.android.com/jetpack/compose/designsystems/material3) supporting dynamic color schemes.
+- **Image/Video Loading**: [Coil](https://coil-kt.github.io/coil/) with `VideoFrameDecoder` support for high-quality, efficient media thumbnails.
+- **Video Engine**: [ExoPlayer (Media3)](https://developer.android.com/guide/topics/media/exoplayer) for optimized media playback.
+- **Preferences**: [Jetpack DataStore](https://developer.android.com/topic/libraries/architecture/datastore) for persistent theme and dark mode states.
+- **Architecture Pattern**: MVVM (Model-View-ViewModel) with structured StateFlow.
 
-Viewed Navigation.kt:1-8
-Viewed DataRepository.kt:1-13
+---
 
-The project files look complete. Let me now attempt to build the project to check for any compilation errors:
+## 📁 Repository Structure
 
-Used tool: ask_permission
-Ran command: `.\gradlew assembleDebug --no-daemon 2>&1`
-
-Build is running in the background. While waiting, let me check the theme `Type.kt` and the MainScreen files to see if they reference any missing symbols:
-
-Viewed Type.kt:1-37
-Viewed MainScreen.kt:1-56
-
-The `MainScreen.kt` and `MainScreenViewModel.kt` use `NavKey` from Navigation3 and the old template `DefaultDataRepository`. These are leftover template files not used by our app but still compile — they reference `NavKey` from Navigation3. The build is running so let me wait for the result. Let me check if it finishes:
-
-Used tool: manage_task
-
-🎉 **BUILD SUCCESSFUL!** The app compiles cleanly. The "exit code 1" was just PowerShell printing a WARNING about Java native access — the build itself was **BUILD SUCCESSFUL in 20s** with all 36 tasks `UP-TO-DATE`.
-
-Now let me find the generated APK and verify it exists:
-
-Ran command: `Get-ChildItem -Path "G:\whatsappstatusdownload\app\build\outputs" -Recurse -Filter "*.apk" | Select-Object FullName, Length, LastWriteTime`
-
-The APK is built — **19.8 MB** debug APK is ready at `app/build/outputs/apk/debug/app-debug.apk`.
-
-Now let me create the walkthrough artifact summarizing what was built:
-
-Edited walkthrough.md -->
-
-## ✅ App Complete — BUILD SUCCESSFUL
-
-The **WhatsApp Status Saver** Android app is fully built and compiled. Here's what's ready:
-
-### 📦 APK
-`G:\whatsappstatusdownload\app\build\outputs\apk\debug\app-debug.apk` — **19.8 MB**
-
-### What's in the app
-
-| Layer | Files | Description |
-|---|---|---|
-| **Data** | [StorageRepository.kt](file:///G:/whatsappstatusdownload/app/src/main/java/com/example/statussaver/data/StorageRepository.kt) | SAF traversal + MediaStore writer |
-| **Data** | [StatusItem.kt](file:///G:/whatsappstatusdownload/app/src/main/java/com/example/statussaver/data/StatusItem.kt) | Data model |
-| **ViewModel** | [StatusViewModel.kt](file:///G:/whatsappstatusdownload/app/src/main/java/com/example/statussaver/ui/StatusViewModel.kt) | 4 UI states + download state per item |
-| **UI** | [GalleryScreen.kt](file:///G:/whatsappstatusdownload/app/src/main/java/com/example/statussaver/ui/components/GalleryScreen.kt) | Full gallery with tabs, cards, download buttons |
-| **Entry** | [MainActivity.kt](file:///G:/whatsappstatusdownload/app/src/main/java/com/example/statussaver/MainActivity.kt) | SAF launcher + Scaffold + Snackbar |
-| **Theme** | [Color.kt](file:///G:/whatsappstatusdownload/app/src/main/java/com/example/statussaver/theme/Color.kt) | Neon violet + electric blue dark palette |
-
-### Key capabilities
-- 🗂️ **SAF Integration** — file picker pre-pointed at `.Statuses`, permission persisted across launches
-- 🖼️ **Coil thumbnails** — images load instantly; videos show frame at 1s with play icon overlay  
-- ⬇️ **Download to gallery** — images → `Pictures/StatusSaver/`, videos → `Downloads/StatusSaver/`
-- 🏷️ **Tab filtering** — All / Photos / Videos with per-tab empty states
-- ✨ **Animated download button** — Idle → InProgress → Done → Failed with visual feedback
-- 🌑 **Always-dark Material 3** — neon violet/electric blue glassmorphism palette
-
-### To install on device
-```powershell
-adb install "G:\whatsappstatusdownload\app\build\outputs\apk\debug\app-debug.apk"
 ```
+com.example.statussaver/
+├── MainActivity.kt              # Main entry point and SAF permission handler
+├── data/
+│   ├── StatusItem.kt            # Data model representing a media status
+│   └── StorageRepository.kt     # Traversing storage and exporting to MediaStore
+├── ui/
+│   ├── StatusViewModel.kt       # State management and business logic
+│   └── components/
+│       ├── GalleryScreen.kt     # The main grid display and state switcher
+│       └── MediaViewerScreen.kt # Pager-based full-screen media viewer
+└── theme/
+    ├── Color.kt                 # Application color palette specifications
+    ├── Theme.kt                 # Material 3 setup mapping local state
+    └── Type.kt                  # Custom typography settings
+```
+
+---
+
+## 🚀 Getting Started
+
+### 📋 Prerequisites
+- Android Studio Ladybug (or newer)
+- Android SDK 26+ (Android 8.0+)
+- A physical device or emulator with WhatsApp installed and active status media.
+
+### 📥 Setup & Build
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/souvik2812/StatusSaverWhatsapp.git
+   cd StatusSaverWhatsapp
+   ```
+2. Open the project in Android Studio.
+3. Build the project or run it directly on your connected device.
+
+---
+
+## 📱 How to Use
+
+1. Launch **Status Saver** on your device.
+2. Tap **"Grant Folder Access"**.
+3. The system file picker will open. Navigate to:
+   `Android > media > com.whatsapp > WhatsApp > Media > .Statuses`
+4. Tap **"Use this folder"** and allow permissions. The statuses will load immediately.
+5. Use the icons on the top-right to change the color theme or toggle Dark/Light mode.
+6. Tap any photo or video to open the gallery viewer. Swipe to browse, and tap the download button (↓) to save it forever.
